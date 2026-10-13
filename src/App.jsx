@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import ChamadoForm from "./components/ChamadoForm";
 import ChamadoList from "./components/ChamadoList";
 import Panel from "./components/Panel";
 import { initialTickets } from "./data/chamados";
@@ -8,6 +9,10 @@ export default function App() {
   const [tickets, setTickets] = useState(initialTickets);
 
   const resolvedCount = tickets.filter((ticket) => ticket.resolved).length;
+
+  function handleAddTicket(newTicket) {
+    setTickets((currentTickets) => [...currentTickets, newTicket]);
+  }
 
   function handleToggleTicket(ticketId) {
     setTickets((currentTickets) =>
@@ -32,6 +37,10 @@ export default function App() {
         <h1>Fila de Atendimento</h1>
         <p>Organize os chamados recebidos pelos setores.</p>
       </header>
+
+      <Panel title="Novo chamado">
+        <ChamadoForm onAddTicket={handleAddTicket} />
+      </Panel>
 
       <Panel title="Resumo">
         <p className="summary">
